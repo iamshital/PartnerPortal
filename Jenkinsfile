@@ -17,20 +17,20 @@ pipeline {
                 powershell returnStatus: true, script: 'Write-Host "Uploading VHD.."'
             }
         }
-        stage('ValidationTests') 
+		
+			parallel BootValidation: 
 			{
-				parallel BootValidation: {
-					steps {
-						powershell returnStatus: true, script: 'Write-Host "Boot Validation"'
-					}
-				
-				}, VMSizesValiddation: {
-					steps {
-						powershell returnStatus: true, script: 'Write-Host "VM sizes validation.."'
-					}
-				failFast: true|false		
+				steps {
+					powershell returnStatus: true, script: 'Write-Host "Boot Validation"'
 				}
+			
+			}, VMSizesValiddation: {
+				steps {
+					powershell returnStatus: true, script: 'Write-Host "VM sizes validation.."'
+				}
+			failFast: true|false		
 			}
-        }
+		}
+        
     }
 }
