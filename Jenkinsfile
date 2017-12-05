@@ -2,20 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('CopyVHDtoQueue') {
             steps {
                 echo 'Building..'
             }
         }
-        stage('Test') {
+        stage('ProcessVHD') {
             steps {
                 echo 'Testing..'
             }
         }
-        stage('Deploy') {
+        stage('UploadVHDtoAzure') {
             steps {
                 echo 'Deploying....'
             }
+        stage('Validation') {
+            steps {
+                echo 'Deploying....'
+            }			
         }
     }
 }
