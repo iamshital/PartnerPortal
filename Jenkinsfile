@@ -4,22 +4,22 @@ pipeline {
     stages {
         stage('CopyVHDtoQueue') {
             steps {
-                echo 'Building..'
+                powershell returnStatus: true, script: 'Write-Host "Copying VHD.."'
             }
         }
         stage('ProcessVHD') {
             steps {
-                echo 'Testing..'
+                powershell returnStatus: true, script: 'Write-Host "Processing VHD.."'
             }
         }
         stage('UploadVHD') {
             steps {
-                echo 'Deploying....'
+                powershell returnStatus: true, script: 'Write-Host "Uploading VHD.."'
             }
         }
         stage('ValidationTests') {
             steps {
-                echo 'Testing..'
+                powershell returnStatus: true, script: 'Write-Host "Running Tests.."'
             }
         }
     }
