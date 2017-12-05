@@ -1,6 +1,13 @@
 pipeline {
-    agent any
-
+	agent {
+		label "master"
+	}    
+    environment { 
+        CC = 'clang'
+    }
+    parameters {
+        string(name: 'Greeting', defaultValue: 'Hello', description: 'How should I greet the world?')
+    }	
     stages {
         stage('CopyVHDtoQueue') {
             steps {
@@ -28,7 +35,7 @@ pipeline {
                         label "master"
                     }
                     steps {
-                        echo "Boot Validation"
+                        echo $(CC)
                     }
                 }
                 stage('Different VM sizes') {
@@ -41,6 +48,14 @@ pipeline {
                 }
             }			
         }
+		post {
+			always {
+				echo "VM Size Validation."
+			}
+			failure {
+				echo "Failed."
+			}
+		}		
 		        
     }
 }
