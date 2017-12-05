@@ -18,7 +18,6 @@ pipeline {
             }
         }
         stage('Validation') {
-
 			parallel linux: {
 				node('master') {
 					checkout scm
@@ -35,9 +34,6 @@ pipeline {
 					powershell returnStatus: true, script: 'Write-Host "Testing Done.."'
 				}
 			}		
-		
-		
-		
         }
 		        
     }
