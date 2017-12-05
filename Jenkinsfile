@@ -47,15 +47,14 @@ pipeline {
                     }
                 }
             }			
-        }
-		post {
-			always {
-				echo "VM Size Validation."
-			}
-			failure {
-				echo "Failed."
-			}
-		}		
-		        
+        }	       
     }
+	post {
+		always {
+			echo "VM Size Validation."
+		}
+		failure {
+			echo "Failed."
+		}
+	}		
 }
