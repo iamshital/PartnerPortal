@@ -17,20 +17,28 @@ pipeline {
                 powershell returnStatus: true, script: 'Write-Host "Uploading VHD.."'
             }
         }
+        stage('Validation') {
+
+			parallel linux: {
+				node('master') {
+					checkout scm
+					try {
+						powershell returnStatus: true, script: 'Write-Host "Testing Started.."'
+					}
+					finally {
+						powershell returnStatus: true, script: 'Write-Host "Testing Done.."'
+					}
+				}
+			},
+			windows: {
+				node('master') {
+					powershell returnStatus: true, script: 'Write-Host "Testing Done.."'
+				}
+			}		
 		
-			parallel BootValidation: 
-			{
-				steps {
-					powershell returnStatus: true, script: 'Write-Host "Boot Validation"'
-				}
-			
-			}, VMSizesValiddation: {
-				steps {
-					powershell returnStatus: true, script: 'Write-Host "VM sizes validation.."'
-				}
-			failFast: true|false		
-			}
-		}
-        
+		
+		
+        }
+		        
     }
 }
