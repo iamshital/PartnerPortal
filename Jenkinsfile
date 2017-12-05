@@ -1,10 +1,21 @@
 pipeline {
-  node('master')
-  stages {
-    stage('CopyVHDtoQueue') {
-      steps {
-        powershell(script: 'Write-Host "CopyVDHDtoQueue"', returnStatus: true, returnStdout: true)
-      }
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
     }
-  }
 }
