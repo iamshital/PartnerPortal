@@ -12,14 +12,15 @@ pipeline {
                 echo 'Testing..'
             }
         }
-        stage('UploadVHDtoAzure') {
+        stage('UploadVHD') {
             steps {
                 echo 'Deploying....'
             }
-        stage('Validation') {
+        }
+        stage('ValidationTests') {
             steps {
-                echo 'Deploying....'
-            }			
+                echo 'Testing..'
+            }
         }
     }
 }
