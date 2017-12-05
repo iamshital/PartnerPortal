@@ -23,20 +23,20 @@ pipeline {
             }
 			failFast true		
             parallel {
-                stage('Branch A') {
+                stage('BootValidation') {
                     agent {
                         label "master"
                     }
                     steps {
-                        echo "On Branch A"
+                        echo "Boot Validation"
                     }
                 }
-                stage('Branch B') {
+                stage('Different VM sizes') {
                     agent {
                         label "master"
                     }
                     steps {
-                        echo "On Branch B"
+                        echo "VM Size Validation."
                     }
                 }
             }			
