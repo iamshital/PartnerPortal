@@ -1,5 +1,5 @@
 pipeline {
-  agent 'master'
+  node('master')
   stages {
     stage('CopyVHDtoQueue') {
       steps {
