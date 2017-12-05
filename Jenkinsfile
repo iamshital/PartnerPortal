@@ -18,22 +18,28 @@ pipeline {
             }
         }
         stage('Validation') {
-			parallel linux: {
-				node('master') {
-					checkout scm
-					try {
-						powershell returnStatus: true, script: 'Write-Host "Testing Started.."'
-					}
-					finally {
-						powershell returnStatus: true, script: 'Write-Host "Testing Done.."'
-					}
-				}
-			},
-			windows: {
-				node('master') {
-					powershell returnStatus: true, script: 'Write-Host "Testing Done.."'
-				}
-			}		
+            when {
+                branch 'master'
+            }
+			failFast true		
+            parallel {
+                stage('Branch A') {
+                    agent {
+                        label "master"
+                    }
+                    steps {
+                        echo "On Branch A"
+                    }
+                }
+                stage('Branch B') {
+                    agent {
+                        label "master"
+                    }
+                    steps {
+                        echo "On Branch B"
+                    }
+                }
+            }			
         }
 		        
     }
