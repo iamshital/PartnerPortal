@@ -35,7 +35,7 @@ pipeline {
                         label "master"
                     }
                     steps {
-                        echo ${CC}
+                        echo "Hello ${CC}"
                     }
                 }
                 stage('Different VM sizes') {
