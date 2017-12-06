@@ -29,6 +29,7 @@ pipeline {
         stage('UploadVHD') {
             steps {
                 powershell returnStatus: true, script: 'Write-Host "Uploading VHD.."'
+				echo "${VMSizeValidation}"
             }
         }
         stage('Validation') {		
@@ -49,6 +50,10 @@ pipeline {
                     agent {
                         label "master"
                     }
+					when {
+						// Only say hello if a "greeting" is requested
+						expression { params.VMSizeValidation == 'True' }
+					}					
                     steps {
                         echo "VM Size Validation."
                     }
