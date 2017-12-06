@@ -33,12 +33,12 @@ pipeline {
             }
         }
 
-		  stage "Stage Parallel"
+		  stage ('Stage Parallel')
 		  def branches = [:]
 		  for (int i = 0; i < 5; i++) {
 			def index = i
 			branches["split${i}"] = {
-			  stage "Stage parallel- #"+index
+			  stage ('test ${1}')
 			  node('remote') {
 			   echo  'Starting sleep'
 			   sleep 10
