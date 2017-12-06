@@ -34,32 +34,29 @@ pipeline {
         }
         stage('Validation') {	
 
-		def branches = [:]
+	  stage "Stage Parallel"
+	  def branches = [:]
+	  for (int i = 0; i < 3; i++) {
 
-		  for (int i = 0; i < 5; i++) {
+		branches["split${i}"] = {
 
-			if (params.BootValidation == 'true')
-				{
-				branches["split${i}"] = {
+		  stage "Stage parallel- #"+i
 
-				  stage "Stage parallel- #"+i
+		  node('master') {
 
-				  node('remote') {
+		   echo  'Starting sleep'
 
-				   echo  'Starting sleep'
+		   sleep 10
 
-				   sleep 10
+		   echo  'Finished sleep'
 
-				   echo  'Finished sleep'
-
-				  }
-
-				}
-			}
 		  }
-		  parallel branches		
-		  failFast false
-        }	       
+
+		}
+
+	  }
+
+	  parallel branches	       
     }
 	post {
 		always {
