@@ -32,7 +32,6 @@ pipeline {
 				echo "${VMSizeValidation}"
             }
         }
-        stage('Validation') {	
 
 	  stage "Stage Parallel"
 	  def branches = [:]
@@ -55,7 +54,6 @@ pipeline {
 		}
 
 	  }
-
 	  parallel branches	       
     }
 	post {
