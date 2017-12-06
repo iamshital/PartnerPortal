@@ -32,34 +32,33 @@ pipeline {
 				echo "${VMSizeValidation}"
             }
         }
-        stage('Validation') {		
-				parallel {
-					stage('BootValidation') {
-						agent {
-							label "master"
-						}
-						when {
-							// Only say hello if a "greeting" is requested
-							expression { params.BootValidation == 'true' }
-						}						
-						steps {
-							echo "Hello ${CC}"
-						}
-					}
-				when {
-					// Only say hello if a "greeting" is requested
-					expression { params.VMSizeValidation == 'true' }
+        stage('Validation') {	
+
+		def branches = [:]
+
+		  for (int i = 0; i < 5; i++) {
+
+			if (params.BootValidation == 'true')
+				{
+				branches["split${i}"] = {
+
+				  stage "Stage parallel- #"+i
+
+				  node('remote') {
+
+				   echo  'Starting sleep'
+
+				   sleep 10
+
+				   echo  'Finished sleep'
+
+				  }
+
 				}
-                stage('Different VM sizes') {
-                    agent {
-                        label "master"
-                    }					
-                    steps {
-                        echo "VM Size Validation."
-                    }
-                }
-            }
-			failFast false
+			}
+		  }
+		  parallel branches		
+		  failFast false
         }	       
     }
 	post {
