@@ -12,7 +12,8 @@ pipeline {
         stage('Inspect File') {
             steps {
 				
-                powershell script: '.\\PowerShell\\Accept-VHD.ps1'
+                //powershell script: '.\\PowerShell\\Accept-VHD.ps1'
+				powershell returnStatus: true, script: 'Write-Host "Copying VHD.."'
             }
         }
         stage('CopyVHDtoQueue') {
