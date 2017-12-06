@@ -33,25 +33,21 @@ pipeline {
             }
         }
 
-	  stage ('Validation')
-	  def branches = [:]
-	  for (int i = 0; i < 3; i++) {
-
-		branches["split${i}"] = {
-
-		  stage ('Validation${i}')
-
-
-		   echo  'Starting sleep'
-
-		   sleep 10
-
-		   echo  'Finished sleep'
-
-		}
-
-	  }
-	  parallel branches	       
+		  stage "Stage Parallel"
+		  def branches = [:]
+		  for (int i = 0; i < 5; i++) {
+			def index = i
+			branches["split${i}"] = {
+			  stage "Stage parallel- #"+index
+			  node('remote') {
+			   echo  'Starting sleep'
+			   sleep 10
+			   echo  'Finished sleep'
+			  }
+			}
+		  }
+		  parallel branches
+  
     }
 	post {
 		always {
