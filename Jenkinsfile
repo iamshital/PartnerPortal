@@ -9,6 +9,11 @@ pipeline {
         string(name: 'Greeting', defaultValue: 'Hello', description: 'How should I greet the world?')
     }	
     stages {
+        stage('Inspect File') {
+            steps {
+                powershell returnStatus: true, script: 'Write-Host "Cheking the File."'
+            }
+        }
         stage('CopyVHDtoQueue') {
             steps {
                 powershell returnStatus: true, script: 'Write-Host "Copying VHD.."'
