@@ -31,17 +31,19 @@ pipeline {
             }
         }
         stage('Validation') {		
-            parallel {
-				if (env.BootValidation == "True") {
+				parallel {
 					stage('BootValidation') {
 						agent {
 							label "master"
 						}
+						when {
+							// Only say hello if a "greeting" is requested
+							expression { params.BootValidation == 'True' }
+						}						
 						steps {
 							echo "Hello ${CC}"
 						}
 					}
-				}
                 stage('Different VM sizes') {
                     agent {
                         label "master"
