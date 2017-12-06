@@ -1,7 +1,7 @@
 node('master') {
 
     stage('Inspect File') {
-        exit 1
+        powershell 'exit 1'
     }
     stage('ProcessVHD') {
         // some block
