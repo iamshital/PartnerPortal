@@ -1,7 +1,7 @@
 node('master') {
 
     stage('Inspect File') {
-        // some block
+        exit 1
     }
     stage('ProcessVHD') {
         // some block
