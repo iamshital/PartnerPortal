@@ -11,6 +11,7 @@ pipeline {
     stages {
         stage('Inspect File') {
             steps {
+				
                 powershell script: '.\\PowerShell\\Accept-VHD.ps1'
             }
         }
@@ -29,17 +30,18 @@ pipeline {
                 powershell returnStatus: true, script: 'Write-Host "Uploading VHD.."'
             }
         }
-        stage('Validation') {
-			failFast true		
+        stage('Validation') {		
             parallel {
-                stage('BootValidation') {
-                    agent {
-                        label "master"
-                    }
-                    steps {
-                        echo "Hello ${CC}"
-                    }
-                }
+				if (env.BootValidation == "True") {
+					stage('BootValidation') {
+						agent {
+							label "master"
+						}
+						steps {
+							echo "Hello ${CC}"
+						}
+					}
+				}
                 stage('Different VM sizes') {
                     agent {
                         label "master"
@@ -48,7 +50,8 @@ pipeline {
                         echo "VM Size Validation."
                     }
                 }
-            }			
+            }
+			failFast false
         }	       
     }
 	post {
@@ -56,7 +59,7 @@ pipeline {
 			echo "VM Size Validation."
 		}
 		failure {
-			echo "Failed."
+			echo "Final Build Failed."
 		}
 	}		
 }
