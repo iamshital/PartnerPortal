@@ -30,9 +30,6 @@ pipeline {
             }
         }
         stage('Validation') {
-            when {
-                branch 'master'
-            }
 			failFast true		
             parallel {
                 stage('BootValidation') {
