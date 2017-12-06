@@ -40,20 +40,20 @@ pipeline {
 						}
 						when {
 							// Only say hello if a "greeting" is requested
-							expression { params.BootValidation == 'True' }
+							expression { params.BootValidation == 'true' }
 						}						
 						steps {
 							echo "Hello ${CC}"
 						}
 					}
+				when {
+					// Only say hello if a "greeting" is requested
+					expression { params.VMSizeValidation == 'true' }
+				}
                 stage('Different VM sizes') {
                     agent {
                         label "master"
-                    }
-					when {
-						// Only say hello if a "greeting" is requested
-						expression { params.VMSizeValidation == 'True' }
-					}					
+                    }					
                     steps {
                         echo "VM Size Validation."
                     }
